@@ -1,0 +1,31 @@
+---
+
+- name: enabled MariaDB
+  service:
+    name: mariadb
+    enabled: yes  
+
+- name: enabled nginx
+  service:
+    name: nginx
+    enabled: yes
+
+- name: enabled php-fpm
+  service:
+    name: php-fpm
+    enabled: yes  
+
+- name: Start MariaDB
+  service:
+    name: mariadb
+    state: started
+
+- name: Start php-fpm
+  service:
+    name: php-fpm
+    state: started  
+
+- name: Start nginx
+  service:
+    name: nginx
+    state: started

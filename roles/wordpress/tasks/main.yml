@@ -1,0 +1,49 @@
+---
+- name: Create some directory if not exist
+  file:
+    path: /var/www/html
+    state: directory
+  tags: wordpress
+
+- name: 'Download {{ site }} zip file'
+  get_url:
+    url: http://wordpress.org/wordpress-{{ wordpress_version }}.tar.gz
+    dest: /var/www/html
+  tags: wordpress
+
+- name: 'Unarchive {{ site }} files'
+  unarchive:
+    src: /var/www/html/wordpress-{{ wordpress_version }}.tar.gz
+    dest: /var/www/html/
+    remote_src: yes
+  tags: wordpress
+
+- name: Copy template wp-config-sample.php template into Wordpress directory
+  template:
+    src: wp-config-sample.php.j2
+    dest: /var/www/html/wordpress/wp-config.php
+  when:
+    wordpress_mysql_enabled == true
+  tags: wordpress
+
+- name: 'add .conf to {{ site }}'
+  template:
+    src: wordpress.conf.j2
+    dest: "/etc/nginx/conf.d/{{ site }}.conf"
+
+- name: Setando permissão
+  file:
+    path: "/var/www/html/wordpress"
+    owner: nginx
+    group: nginx
+    recurse: yes
+
+- name: restart php-fpm
+  service:
+    name: php-fpm
+    state: restarted  
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted    

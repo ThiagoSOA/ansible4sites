@@ -1,0 +1,15 @@
+$php bin/magento setup:install \
+--base-url=https://loja.tsoa.ml \
+--db-host=localhost \
+--db-name=magentodb \
+--db-user=magento \
+--db-password=magentopw \
+--admin-firstname=admin \
+--admin-lastname=admin \
+--admin-email=thiago.soa321@gmail.com \
+--admin-user=admin \
+--admin-password=admin123 \
+--language=en_US \
+--currency=USD \
+--timezone=America/Sao_Paulo \
+--use-rewrites=1

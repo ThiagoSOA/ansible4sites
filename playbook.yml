@@ -1,0 +1,15 @@
+---
+- hosts: webserver
+  remote_user: centos
+  become: yes
+  become_method: sudo
+
+  roles:
+    - swap  
+    - install
+    - banco     
+    - site   
+    - wordpress 
+    - magento
+    - tomcat
+    - ssl

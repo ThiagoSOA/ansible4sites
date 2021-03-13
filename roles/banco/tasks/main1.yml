@@ -1,0 +1,54 @@
+---
+- name: test mysql_secure_installation
+  mysql_secure_installation:
+    login_password: ''
+    new_password: "{{ passwd_db }}"
+    user: root
+    login_host: localhost
+    hosts: ['localhost', '127.0.0.1', '::1']
+    change_root_password: true
+    remove_anonymous_user: true
+    disallow_root_login_remotely: true
+    remove_test_db: true
+  register: mysql_secure
+
+# To see detailed output
+- debug:
+    var: mysql_secure
+
+- name: Password root MariaDB
+  mysql_user:
+    login_user: root
+    login_password: "{{ passwd_db }}"
+    name: root
+    host_all: yes
+    password: "{{ passwd_db }}"
+    state: present
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    
+- name: Removendo usuários anônimos
+  mysql_user:
+    name: ''
+    host: localhost
+    state: absent
+    login_user: root
+    login_password: "{{ passwd_db }}"
+    login_unix_socket: /var/lib/mysql/mysql.sock
+
+- name: Criar database wordpress
+  mysql_db:
+    name: "{{ wordpress_database }}"
+    state: present
+    login_user: root
+    login_password: "{{ passwd_db }}"
+    login_unix_socket: /var/lib/mysql/mysql.sock
+
+- name: Criando usuário do wordpress e acessos
+  mysql_user:
+    name: "{{ wordpress_user }}"
+    password: "{{ wordpress_password }}"
+    priv: "{{ wordpress_database }}.*:ALL"
+    state: present
+    login_user: root
+    login_password: "{{ passwd_db }}"
+    login_unix_socket: /var/lib/mysql/mysql.sock

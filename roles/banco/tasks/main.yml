@@ -1,0 +1,22 @@
+---
+
+- name: Create a new databases
+  community.mysql.mysql_db:
+    name:
+      - wpdb
+      - magentodb
+    state: present
+
+- name: Create user with password, wpdb database privileges
+  community.mysql.mysql_user:
+    state: present
+    name: '{{ wordpress_user }}'
+    password: '{{ wordpress_password }}'
+    priv: '{{ wordpress_database }}.*:ALL,GRANT'
+
+- name: Create user with password, magentodb database privileges
+  community.mysql.mysql_user:
+    state: present
+    name: '{{ magento_user }}'
+    password: '{{ magento_password }}'
+    priv: '{{ magento_database }}.*:ALL,GRANT'

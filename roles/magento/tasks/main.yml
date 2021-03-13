@@ -1,0 +1,88 @@
+---
+
+- name: unarchive magento
+  unarchive:
+    src: "{{ magento_url }}"
+    dest: /var/www/html/
+    remote_src: yes
+
+- name: add php .conf to "{{ site }}"
+  ansible.builtin.template:
+    src: "{{ site }}php.conf.j2"
+    dest: "/etc/php-fpm.d/{{ site }}.conf"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+
+- name: Disable o SELinux
+  selinux:
+    state: disabled    
+
+- name: restart php-fpm
+  service:
+    name: php-fpm
+    state: restarted      
+    
+- name: add .conf to "{{ site }}"
+  ansible.builtin.template:
+    src: "{{ site }}.conf.j2"
+    dest: "/etc/nginx/conf.d/{{ site }}.conf"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+
+- name: Install composer
+  composer:
+    command: install
+    working_dir: /var/www/html/magento2-2.2/
+
+- name: copy install.sh to "{{ site }}"
+  ansible.builtin.template:
+    src: install.sh
+    dest: "/var/www/html/magento2-2.2/install.sh"
+    # owner: "{{ owner }}"
+    # group: "{{ group }}"
+
+- name: Install magento
+  shell: |
+    cd /var/www/html/magento2-2.2 
+    chmod +x install.sh 
+    ./install.sh
+
+- name: Setting permission
+  file:
+    path: "/var/www/html/magento2-2.2"
+    owner: nginx
+    group: nginx
+    recurse: yes
+    
+# - name: Instalando Magento
+#   ansible.builtin.shell:
+#     cmd: 
+#       php -f ./magento setup:install \
+#       --base-url=loja.tsoa.ml \
+#       --db-host="localhost" \
+#       --db-name="{{ magento_database }}" \
+#       --db-user="{{ magento_user }}" \
+#       --db-password="{{ magento_password }}" \
+#       --admin-firstname="{{ firstname }}" \
+#       --admin-lastname="{{ lastname }}"
+#       --admin-email="{{ email }}" \
+#       --admin-user="{{ firstname }}" \
+#       --admin-password="{{ magento_password }}" \
+#       --language=en_US \
+#       --currency=USD \
+#       --timezone=America/Sao_Paulo \
+#       --use-rewrites=1
+#   args:
+#     executable: "/var/www/html/magento2-2.2/bin"
+
+- name: restart php-fpm
+  service:
+    name: php-fpm
+    state: restarted  
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+
+

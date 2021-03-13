@@ -1,0 +1,6 @@
+---
+# tasks file for Let's Encrypt
+
+- name: install SSL
+  ansible.builtin.shell:
+    cmd: 'certbot --nginx -d www.tsoa.ml -d blog.tsoa.ml -d loja.tsoa.ml -d tomcat.tsoa.ml --email thiago.soa321@gamil.com --agree-tos'

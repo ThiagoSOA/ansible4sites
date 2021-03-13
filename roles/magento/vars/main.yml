@@ -1,0 +1,18 @@
+---
+owner: nginx
+group: nginx
+site: magento
+magento_url: https://github.com/magento/magento2/archive/2.2.zip
+
+
+#login vars
+firstname: Admin
+lastname: Admin
+user: Admin
+password: Admin
+email: thiago.soa321@gmail.com
+
+#db vars
+magento_database: magentodb
+magento_user: magento
+magento_password: magentopw

@@ -1,0 +1,5 @@
+---
+java_packages: java-1.8.0-openjdk
+
+php_dependencies : ['php','php-fpm','php-ctype','php-curl','php-dom','php-gd','php-mbstring','php-hash','php-openssl','php-simplexml','php-spl','php-libxml','php-xsl','php-json','php-iconv','php-bcmath','php-pdo_mysql','php-pecl-zip','php-xmlrpc','php-xml','php-mysqlnd','php-intl','php-opcache','php-xml','php-soap','php-bcmath','php-intl','php-json','php-zip','php-cli']
+

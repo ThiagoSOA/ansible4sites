@@ -1,0 +1,9 @@
+---
+passwd_db: passwordroot
+wordpress_database: wpdb
+wordpress_user: wordpress
+wordpress_password: wordpresspw
+magento_database: magentodb
+magento_user: magento
+magento_password: magentopw
+

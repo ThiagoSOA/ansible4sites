@@ -1,0 +1,10 @@
+---
+wordpress_mysql_enabled: true
+
+wordpress_version: 5.6.2
+wordpress_database: wpdb
+wordpress_user: wordpress
+wordpress_password: wordpresspw
+wordpress_host: localhost
+site: wordpress
+

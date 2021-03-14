@@ -11,7 +11,7 @@ Edit the variable file in ``roles/vars/main.yml`` , database name, nginx configu
 
 After editing the files and vars, you can run the command:
 
-``ansible-playbook -i hosts playbook.yml``
+``ansible-playbook -i host playbook.yml``
 
 - Directory structure
     

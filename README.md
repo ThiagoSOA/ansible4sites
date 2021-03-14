@@ -4,7 +4,7 @@
 This Ansible playbook is for installing Magento 2 Open Source, wordpress, tomcat using nginx reverse proxy, simple website, mysql database (MariaDB)
 all on a single server using CentOS 8.
 
-- Ansible 2.10.5
+- Ansible 2.9.18
  
 Edit file ``hosts``, add the public IP do you server.
 Edit the variable file in ``roles/vars/main.yml`` , database name, nginx configuration, package version etc .
